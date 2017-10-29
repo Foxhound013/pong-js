@@ -69,16 +69,25 @@ function clear() {
 // at one time. Results in both players being able to move.
 function move() {
   if (keys[38]) {
-    yPos1 -= 3;
+    //Prevent the paddle from going off the board
+    if (yPos1 > 0) {
+      yPos1 -= 3;
+    }
   }
   if (keys[40]) {
-    yPos1 += 3;
+    if(yPos1 < 540) {
+      yPos1 += 3;
+    }
   }
   if (keys [87]) {
-    yPos0 -= 3;
+    if (yPos0 > 0) {
+      yPos0 -= 3;
+    }
   }
   if (keys [83]) {
-    yPos0 += 3;
+    if (yPos0 < 540) {
+      yPos0 += 3;
+    }
   }
 };
 
@@ -86,13 +95,11 @@ function move() {
 //stores keyCode as true in that keyCode index position
 window.addEventListener("keydown", function(e) {
   keys[e.keyCode] = true;
-  console.log(keys[e.keyCode]);
 });
 
 //stores keyCode as false in that keyCode index position
 window.addEventListener("keyup", function(e) {
   keys[e.keyCode] = false;
-  console.log(keys[e.keyCode]);
 });
 
 
