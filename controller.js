@@ -7,11 +7,11 @@ canvas.style.position = "absolute";
 canvas.style.border = "1px solid";
 
 //initialize the board
-var xPos0, xPos1, yPos0, yPos1, width, height;
-xPos0 = 10; //x-position of player 0
-xPos1 = 580; //x-position of player 1
-yPos0 = 270; //y-position of player 0
-yPos1 = 270; //y-position of player 1
+var dx0, dx1, dy0, dy1, width, height;
+dx0 = 10; //x-position of player 0
+dx1 = 580; //x-position of player 1
+dy0 = 270; //y-position of player 0
+dy1 = 270; //y-position of player 1
 WIDTH = 10;
 HEIGHT = 60;
 
@@ -30,8 +30,13 @@ function init() {
 
   //initialize the paddles for each player
   ctx.fillStyle = 'purple';
-  ctx.fillRect(xPos0, yPos0, WIDTH, HEIGHT);  //x-pos, y-pos, x-length, y-length
-  ctx.fillRect(xPos1, yPos1, WIDTH, HEIGHT);
+  ctx.fillRect(dx0, dy0, WIDTH, HEIGHT);  //x-pos, y-pos, x-length, y-length
+  ctx.fillRect(dx1, dy1, WIDTH, HEIGHT);
+
+  //initialize the ball
+
+
+
 
   //draw out the center line
   ctx.beginPath();
@@ -49,8 +54,8 @@ function draw() {
   move(); //Allow player input
 
   //redraw paddles
-  ctx.fillRect(xPos0, yPos0, WIDTH, HEIGHT);
-  ctx.fillRect(xPos1, yPos1, WIDTH, HEIGHT);
+  ctx.fillRect(dx0, dy0, WIDTH, HEIGHT);
+  ctx.fillRect(dx1, dy1, WIDTH, HEIGHT);
 
   //draw out the center line
   ctx.beginPath();
@@ -70,27 +75,29 @@ function clear() {
 function move() {
   if (keys[38]) {
     //Prevent the paddle from going off the board
-    if (yPos1 > 0) {
-      yPos1 -= 3;
+    if (dy1 > 0) {
+      dy1 -= 3;
     }
   }
   if (keys[40]) {
-    if(yPos1 < 540) {
-      yPos1 += 3;
+    if(dy1 < 540) {
+      dy1 += 3;
     }
   }
   if (keys [87]) {
-    if (yPos0 > 0) {
-      yPos0 -= 3;
+    if (dy0 > 0) {
+      dy0 -= 3;
     }
   }
   if (keys [83]) {
-    if (yPos0 < 540) {
-      yPos0 += 3;
+    if (dy0 < 540) {
+      dy0 += 3;
     }
   }
 };
 
+
+//Enable the player to use the keyboard to move the paddles
 
 //stores keyCode as true in that keyCode index position
 window.addEventListener("keydown", function(e) {
