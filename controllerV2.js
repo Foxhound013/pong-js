@@ -68,7 +68,7 @@ function move() {
 window.addEventListener("keydown", function(e) {
     keys[e.keyCode] = true;
   });
-  
+
   //stores keyCode as false in that keyCode index position
   window.addEventListener("keyup", function(e) {
     keys[e.keyCode] = false;
@@ -88,17 +88,17 @@ window.addEventListener("keydown", function(e) {
     ctx.fillRect(player0.dx, player0.dy, player0.width, player0.height);
     ctx.fillStyle = player1.playerColor;
     ctx.fillRect(player1.dx, player1.dy, player1.width, player1.height);
-  
+
     //initialize the ball
     ctx.fillStyle = ball.ballColor;
     ctx.fillRect(ball.dx, ball.dy, ball.width, ball.height);
-  
+
     //draw out the center line
     ctx.beginPath();
     ctx.moveTo(canvas.width/2,0); //x-pos,y-pos
     ctx.lineTo(canvas.width/2,canvas.height);
     ctx.stroke();
-  
+
     //enable movement
     return setInterval(update, 10); //re-draws the frame at an interval of 10 milliseconds
   };
@@ -112,7 +112,7 @@ function update() {
     //redraw paddles
     ctx.fillRect(player0.dx, player0.dy, player0.width, player0.height);
     ctx.fillRect(player1.dx, player1.dy, player1.width, player1.height);
-    
+
     //update Ball position and check to see if it hits anything
     updateBall();
 
@@ -146,10 +146,34 @@ function updateBall() {
 }
 
 //check to see if the ball has collided with anything
+
 function checkCollision() {
     if (ball.dx === (player0.dx + player0.width/2)) {
+      paddleArray = paddleRange();
+      if (paddleArray.includes(ball.dy)) {
         direction = 1;
+      }
     } else if (ball.dx === (player1.dx - player1.width/2)) {
+      paddleArray = paddleRange();
+      if (paddleArray.includes(ball.dy)) {
         direction = 0;
+      }
     }
+}
+
+//Check paddle y range
+function paddleRange() {
+  //create an array to check the y range of the paddle at any point in time
+  paddleArray = []
+  if (direction === 0) {
+    for (var i = player0.dy; i < (player0.dy+player0.height); i++) {
+      paddleArray.push(i);
+    }
+  } else if (direction === 1) {
+    for (var i = player1.dy; i < (player1.dy+player1.height); i++) {
+      paddleArray.push(i);
+    }
+  }
+
+  return paddleArray;
 }
