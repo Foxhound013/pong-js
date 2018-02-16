@@ -8,18 +8,19 @@ canvas.style.border = "1px solid";
 var ctx = canvas.getContext('2d');
 
 //define function constructor for players
-function Player(dx, dy, width, height, playerColor, score, name) {
+function Player(dx, dy, width, height, velocity, playerColor, score, name) {
     this.dx = dx; //x-position
     this.dy = dy; //y-position
     this.width = width;
     this.height = height;
+    this.velocity = velocity;
     this.playerColor = playerColor;
     this.score = score;
     this.name = name;
 }
 //set the base values for each player in a global context
-var player0 = new Player(10, 270, 10, 60, 'purple', 0, 'Player 1');
-var player1 = new Player(580, 270, 10, 60, 'purple', 0, 'Player 2');
+var player0 = new Player(10, 270, 10, 60, 0, 'purple', 0, 'Player 1');
+var player1 = new Player(580, 270, 10, 60, 0, 'purple', 0, 'Player 2');
 
 //define a function constructor for the ball
 function Ball(dx, dy, width, height, ballColor, xVelocity, yVelocity) {
@@ -148,8 +149,10 @@ function updateBall() {
 //check to see if the ball has collided with anything
 
 function checkCollision() {
+  //is the ball at the same x range as the paddle
     if (ball.dx === (player0.dx + player0.width/2)) {
       paddleArray = paddleRange();
+      //is the ball at the same y range as the paddle
       if (paddleArray.includes(ball.dy)) {
         direction = 1;
       }
@@ -174,6 +177,8 @@ function paddleRange() {
       paddleArray.push(i);
     }
   }
-
   return paddleArray;
 }
+
+//calculate the velocity of the paddle and impart it to the ball
+function velcoityCalc {}
