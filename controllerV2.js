@@ -58,13 +58,13 @@ function move() {
     if (keys [87]) {
       if (player0.dy > 0) {
         player0.dy -= 3;
-        player0.velocity = -20;
+        player0.velocity = -3;
       }
     }
     if (keys [83]) {
       if (player0.dy < 540) {
         player0.dy += 3;
-        player0.velocity = 20;
+        player0.velocity = 3;
       }
     }
 };
@@ -146,10 +146,16 @@ function updateBall() {
         ball.dx += 2;
 
         checkCollision();
+        if (ball.yVelocity !== 0) {
+          ball.dy += ball.yVelocity;
+        }
     } else if (direction === 0) {
         ball.dx -= 2;
 
         checkCollision();
+        if (ball.yVelocity !== 0) {
+          ball.dy += ball.yVelocity;
+        }
     }
 }
 
@@ -157,22 +163,33 @@ function updateBall() {
 
 function checkCollision() {
   //is the ball at the same x range as the paddle
-    if (ball.dx === (player0.dx + player0.width/2)) {
-      paddleArray = paddleRange();
-      //is the ball at the same y range as the paddle
-      if (paddleArray.includes(ball.dy)) {
-        direction = 1;
-        // if velocity is
-        if (player0.velocity !== 0) {
-          ball.dy += player0.velocity;
-        }
-      }
-    } else if (ball.dx === (player1.dx - player1.width/2)) {
-      paddleArray = paddleRange();
-      if (paddleArray.includes(ball.dy)) {
-        direction = 0;
+  if (ball.dx === (player0.dx + player0.width/2)) {
+    paddleArray = paddleRange();
+    //is the ball at the same y range as the paddle
+    if (paddleArray.includes(ball.dy)) {
+      direction = 1;
+      // if velocity is
+      if (player0.velocity !== 0) {
+        //ball.dy += player0.velocity;
+        ball.yVelocity += player0.velocity;
       }
     }
+  } else if (ball.dx === (player1.dx - player1.width/2)) {
+    paddleArray = paddleRange();
+    if (paddleArray.includes(ball.dy)) {
+      direction = 0;
+      // if velocity is
+      if (player1.velocity !== 0) {
+        //ball.dy += player0.velocity;
+        ball.yVelocity += player1.velocity;
+      }
+    }
+  }
+  //check to see if ball has collided with top or bottom, switch velocity
+  if (ball.dy < 0 || ball.dy > 590) {
+    ball.yVelocity = -ball.yVelocity;
+    //console.log("hi")
+  }
 }
 
 //Check paddle y range
