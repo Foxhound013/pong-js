@@ -13,7 +13,7 @@ function Player(dx, dy, width, height, velocity, playerColor, score, name) {
     this.dy = dy; //y-position
     this.width = width;
     this.height = height;
-    this.velocity = velocity;
+    this.velocity = velocity; //negative is up, positive is down
     this.playerColor = playerColor;
     this.score = score;
     this.name = name;
@@ -45,25 +45,29 @@ function move() {
     if (keys[38]) {
       //Prevent the paddle from going off the board
       if (player1.dy > 0) {
-        player1.dy -= 3;
+        player1.dy -= 3; //move the paddle up
+        player1.velocity = -3; //impart velocity
       }
     }
     if (keys[40]) {
       if(player1.dy < 540) {
-        player1.dy += 3;
+        player1.dy += 3; //move paddle down
+        player1.velocity = 3;
       }
     }
     if (keys [87]) {
       if (player0.dy > 0) {
         player0.dy -= 3;
+        player0.velocity = -20;
       }
     }
     if (keys [83]) {
       if (player0.dy < 540) {
         player0.dy += 3;
+        player0.velocity = 20;
       }
     }
-  };
+};
 
   //stores keyCode as true in that keyCode index position
 window.addEventListener("keydown", function(e) {
@@ -73,6 +77,9 @@ window.addEventListener("keydown", function(e) {
   //stores keyCode as false in that keyCode index position
   window.addEventListener("keyup", function(e) {
     keys[e.keyCode] = false;
+    //reset velocities on keyup
+    player0.velocity = 0;
+    player1.velocity = 0;
   });
 
   //-------------------------------------------------------------------
@@ -155,6 +162,10 @@ function checkCollision() {
       //is the ball at the same y range as the paddle
       if (paddleArray.includes(ball.dy)) {
         direction = 1;
+        // if velocity is
+        if (player0.velocity !== 0) {
+          ball.dy += player0.velocity;
+        }
       }
     } else if (ball.dx === (player1.dx - player1.width/2)) {
       paddleArray = paddleRange();
@@ -181,4 +192,4 @@ function paddleRange() {
 }
 
 //calculate the velocity of the paddle and impart it to the ball
-function velcoityCalc {}
+function velcoityCalc () {}
