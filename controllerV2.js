@@ -45,25 +45,25 @@ function move() {
     if (keys[38]) {
       //Prevent the paddle from going off the board
       if (player1.dy > 0) {
-        player1.dy -= 3; //move the paddle up
+        player1.dy -= 5; //move the paddle up
         player1.velocity = -3; //impart velocity
       }
     }
     if (keys[40]) {
       if(player1.dy < 540) {
-        player1.dy += 3; //move paddle down
+        player1.dy += 5; //move paddle down
         player1.velocity = 3;
       }
     }
     if (keys [87]) {
       if (player0.dy > 0) {
-        player0.dy -= 3;
+        player0.dy -= 5;
         player0.velocity = -3;
       }
     }
     if (keys [83]) {
       if (player0.dy < 540) {
-        player0.dy += 3;
+        player0.dy += 5;
         player0.velocity = 3;
       }
     }
